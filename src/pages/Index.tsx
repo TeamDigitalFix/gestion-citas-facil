@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Layout from "@/components/Layout";
 import CalendarView from "@/components/CalendarView";
@@ -7,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, Clock, Check, ArrowRight } from "lucide-react";
+import { es } from "date-fns/locale";
+import { format as formatDate } from "date-fns";
 
 // Etapas del proceso de reserva
 enum BookingStep {
@@ -24,7 +25,6 @@ const Index = () => {
 
   const handleStartBooking = () => {
     setCurrentStep(BookingStep.SELECT_DATE);
-    // Scrollear suavemente hacia arriba
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -218,7 +218,6 @@ const Index = () => {
   );
 };
 
-// Componentes auxiliares
 const FeatureCard = ({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) => (
   <Card className="hover-scale transition-all border-border/40">
     <CardContent className="pt-6 text-center">
@@ -239,7 +238,6 @@ const ProcessStep = ({ number, title, description }: { number: number, title: st
   </div>
 );
 
-// Datos auxiliares
 const services = [
   { id: "1", name: "Consultoría web" },
   { id: "2", name: "Estrategia digital" },
@@ -248,15 +246,8 @@ const services = [
   { id: "5", name: "Otro servicio" },
 ];
 
-// Helper para formatear la fecha en español
 const format = (date: Date, formatStr: string, options?: any) => {
-  // Aquí usaríamos date-fns con locale español, pero para simplificar:
-  return new Intl.DateTimeFormat('es-ES', { 
-    weekday: 'long', 
-    day: 'numeric', 
-    month: 'long', 
-    year: 'numeric'
-  }).format(date);
+  return formatDate(date, formatStr, { locale: es, ...options });
 };
 
 export default Index;
